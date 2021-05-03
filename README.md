@@ -4,7 +4,7 @@
 > *How-to Series Rebuild Version* of [DynaRack](https://github.com/ocommaj/dynarack)
 
 **Inspired by [6" Rack Enclosure, Customizable](https://www.thingiverse.com/thing:1936196) by [@KronBjorn](https://www.github.com/kronbjorn)**
-> *Semi-reinventing the wheel: [@KronBjorn/SixInchRack](https://github.com/KronBjorn/SixInchRack) provides some configurability via .scad & customizer app*
+> *Semi-reinventing the wheel: [@KronBjorn/SixInchRack](https://github.com/KronBjorn/SixInchRack) gives some configurability via .scad & app*
 
 
 ![End of Part 3 Screenshot](./doc_images/Completed_Part3_ScreenShot.jpg)
