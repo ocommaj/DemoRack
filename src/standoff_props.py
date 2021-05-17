@@ -1,54 +1,28 @@
 from bpy.props import PointerProperty, FloatProperty
-from bpy.types import Mesh, PropertyGroup, Scene
+from bpy.types import Mesh, Scene
 from bpy.utils import register_class, unregister_class
 from .standoff_mesh import Standoff
+from .property_group import PG
 
-def prop_methods(call, prop=None):
-    def getter(self):
-        try:
-            value = self[prop]
-        except:
-            set_default = prop_methods("SET", prop)
-            set_default(self, self.defaults[prop])
-            if hasattr(self, "on_load"):
-                self.on_load()
-            value = self[prop]
-        finally:
-            return value
-
-    def setter(self, value):
-        self[prop] = value
-
-    def updater(self, context):
-        self.update(context)
-
-    methods = {
-        "GET": getter,
-        "SET": setter,
-        "UPDATE": updater,
-        }
-
-    return methods[call]
-
-class PG_Standoff(PropertyGroup):
+class PG_Standoff(PG):
     metric_diameter: FloatProperty(
         name="Inner Diameter (Metric)",
         min=2,
         max=5,
         step=50,
         precision=1,
-        set=prop_methods("SET", "metric_diameter"),
-        get=prop_methods("GET", "metric_diameter"),
-        update=prop_methods("UPDATE"))
+        set=PG.prop_methods("SET", "metric_diameter"),
+        get=PG.prop_methods("GET", "metric_diameter"),
+        update=PG.prop_methods("UPDATE"))
     height: FloatProperty(
         name="Standoff Height",
         min=2,
         max=6,
         step=25,
         precision=2,
-        set=prop_methods("SET", "height"),
-        get=prop_methods("GET", "height"),
-        update=prop_methods("UPDATE"))
+        set=PG.prop_methods("SET", "height"),
+        get=PG.prop_methods("GET", "height"),
+        update=PG.prop_methods("UPDATE"))
     mesh: PointerProperty(type=Mesh)
 
     defaults = { "metric_diameter": 2.5, "height": 3 }
@@ -56,7 +30,7 @@ class PG_Standoff(PropertyGroup):
     standoff = Standoff()
 
     def on_load(self):
-        if self.height and self.metric_diameter:
+        if hasattr(self, "height") and hasattr(self, "metric_diameter"):
             self.__set_mesh()
 
     def update(self, context):
